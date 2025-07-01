@@ -73,6 +73,7 @@ pandocfilters @ file:///opt/conda/conda-bld/pandocfilters_1643405455980/work
 parso @ file:///C:/b/abs_834b4mj92b/croot/parso_1733963322289/work
 pillow==11.2.1
 platformdirs==4.2.0
+plotly==6.2.0
 prettytable==3.12.0
 prometheus_client @ file:///C:/b/abs_8b175q_ub8/croot/prometheus_client_1744271638821/work
 prompt-toolkit @ file:///C:/b/abs_68uwr58ed1/croot/prompt-toolkit_1704404394082/work
@@ -97,6 +98,7 @@ requests @ file:///C:/b/abs_0b3h9d_724/croot/requests_1750426345668/work
 rfc3339-validator @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/rfc3339-validator_1699543924991/work
 rfc3986-validator @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/rfc3986-validator_1699543955651/work
 rpds-py @ file:///C:/b/abs_0c6z5kcdb6/croot/rpds-py_1736545465023/work
+seaborn==0.13.2
 Send2Trash @ file:///C:/b/abs_7e73ol18dl/croot/send2trash_1736542724140/work
 setuptools==78.1.1
 six @ file:///C:/b/abs_149wuyuo1o/croot/six_1744271521515/work
