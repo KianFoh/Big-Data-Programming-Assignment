@@ -16,7 +16,7 @@ warnings.filterwarnings('ignore')
 # Set page config
 st.set_page_config(
     page_title="Mortality Data Analysis Dashboard",
-    page_icon="📊",
+    page_icon=None,
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -50,7 +50,7 @@ st.markdown("""
 @st.cache_data
 def load_data():
     """Load and cache the dataset"""
-    data_path = "/Users/limweiteik/Desktop/Big data/Big-Data-Programming-Assignment/clean_data.csv"
+    data_path = "/Users/limweiteik/Desktop/Big data/untitled folder/clean_data.csv"
     df = pd.read_csv(data_path)
     return df
 
@@ -118,13 +118,13 @@ def main():
     df = load_data()
     
     # Sidebar controls
-    st.sidebar.header("📋 Dashboard Controls")
+    st.sidebar.header("Dashboard Controls")
     
     # Year range selection
     min_year = int(df['Year'].min())
     max_year = int(df['Year'].max())
     
-    st.sidebar.subheader("📅 Select Year Range")
+    st.sidebar.subheader("Select Year Range")
     year_range = st.sidebar.slider(
         "Year Range",
         min_value=min_year,
@@ -160,9 +160,9 @@ def main():
     # Display selected parameters
     st.sidebar.markdown("---")
     st.sidebar.markdown("**Selected Parameters:**")
-    st.sidebar.write(f"📅 Years: {start_year} - {end_year}")
-    st.sidebar.write(f"🔍 Top Causes: {n_causes}")
-    st.sidebar.write(f"🎯 Clusters: {n_clusters}")
+    st.sidebar.write(f"Years: {start_year} - {end_year}")
+    st.sidebar.write(f"Top Causes: {n_causes}")
+    st.sidebar.write(f"Clusters: {n_clusters}")
     
     # Main content area
     if analysis_type == "Overview":
@@ -176,7 +176,7 @@ def main():
 
 def show_overview(df, start_year, end_year, top_causes):
     """Display overview statistics and visualizations"""
-    st.markdown('<h2 class="sub-header">📈 Overview Analysis</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="sub-header">Overview Analysis</h2>', unsafe_allow_html=True)
     
     # Filter data for the selected year range
     filtered_df = df[
@@ -205,7 +205,7 @@ def show_overview(df, start_year, end_year, top_causes):
         st.metric("Years Analyzed", years_span)
     
     # Top causes visualization
-    st.subheader("🏆 Top Causes of Death")
+    st.subheader("Top Causes of Death")
     
     cause_totals = filtered_df.groupby('Indicator Name')['Number'].sum().sort_values(ascending=False)
     top_causes_data = cause_totals.head(len(top_causes))
@@ -221,7 +221,7 @@ def show_overview(df, start_year, end_year, top_causes):
     st.plotly_chart(fig, use_container_width=True)
     
     # Death rate trends over time
-    st.subheader("📊 Death Rate Trends Over Time")
+    st.subheader("Death Rate Trends Over Time")
     
     # All causes trend
     all_causes_data = df[
@@ -244,7 +244,7 @@ def show_overview(df, start_year, end_year, top_causes):
 
 def show_clustering_analysis(df, start_year, end_year, top_causes, n_clusters):
     """Display clustering analysis results"""
-    st.markdown('<h2 class="sub-header">🎯 Clustering Analysis</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="sub-header">Clustering Analysis</h2>', unsafe_allow_html=True)
     
     # Prepare data
     death_rate_matrix, clustering_data = prepare_clustering_data(df, start_year, end_year, top_causes)
@@ -266,7 +266,7 @@ def show_clustering_analysis(df, start_year, end_year, top_causes, n_clusters):
         st.metric("Age Categories", len(death_rate_matrix))
     
     # Death rate heatmap
-    st.subheader("🔥 Death Rate Heatmap")
+    st.subheader("Death Rate Heatmap")
     
     fig, ax = plt.subplots(figsize=(12, 8))
     sns.heatmap(
@@ -284,7 +284,7 @@ def show_clustering_analysis(df, start_year, end_year, top_causes, n_clusters):
     st.pyplot(fig)
     
     # Clustering results
-    st.subheader("🎯 Clustering Results")
+    st.subheader("Clustering Results")
     
     # Create cluster visualization
     fig = px.scatter(
@@ -300,7 +300,7 @@ def show_clustering_analysis(df, start_year, end_year, top_causes, n_clusters):
     st.plotly_chart(fig, use_container_width=True)
     
     # Cluster analysis table
-    st.subheader("📋 Cluster Analysis")
+    st.subheader("Cluster Analysis")
     
     cluster_analysis = []
     for cluster_id in range(n_clusters):
@@ -320,7 +320,7 @@ def show_clustering_analysis(df, start_year, end_year, top_causes, n_clusters):
     st.dataframe(cluster_df, use_container_width=True)
     
     # Risk level recommendations
-    st.subheader("💡 Risk Level Recommendations")
+    st.subheader("Risk Level Recommendations")
     
     for i, row in cluster_df.iterrows():
         risk_level = "High Risk" if row['Avg Risk Score'] > cluster_df['Avg Risk Score'].median() else "Low Risk"
@@ -343,7 +343,7 @@ def show_clustering_analysis(df, start_year, end_year, top_causes, n_clusters):
 
 def show_temporal_trends(df, start_year, end_year, top_causes):
     """Display temporal trends analysis"""
-    st.markdown('<h2 class="sub-header">📈 Temporal Trends Analysis</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="sub-header">Temporal Trends Analysis</h2>', unsafe_allow_html=True)
     
     # Filter data
     filtered_df = df[
@@ -355,7 +355,7 @@ def show_temporal_trends(df, start_year, end_year, top_causes):
     ]
     
     # Trends over time
-    st.subheader("📊 Death Count Trends")
+    st.subheader("Death Count Trends")
     
     yearly_trends = filtered_df.groupby(['Year', 'Indicator Name'])['Number'].sum().reset_index()
     
@@ -371,7 +371,7 @@ def show_temporal_trends(df, start_year, end_year, top_causes):
     st.plotly_chart(fig, use_container_width=True)
     
     # Death rate trends
-    st.subheader("📈 Death Rate Trends")
+    st.subheader("Death Rate Trends")
     
     yearly_rate_trends = filtered_df.groupby(['Year', 'Indicator Name'])['Death Rate'].mean().reset_index()
     
@@ -387,7 +387,7 @@ def show_temporal_trends(df, start_year, end_year, top_causes):
     st.plotly_chart(fig, use_container_width=True)
     
     # Year-over-year change analysis
-    st.subheader("📊 Year-over-Year Change Analysis")
+    st.subheader("Year-over-Year Change Analysis")
     
     # Calculate year-over-year changes
     yearly_changes = []
@@ -413,7 +413,7 @@ def show_temporal_trends(df, start_year, end_year, top_causes):
 
 def show_demographic_analysis(df, start_year, end_year, top_causes):
     """Display demographic analysis"""
-    st.markdown('<h2 class="sub-header">👥 Demographic Analysis</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="sub-header">Demographic Analysis</h2>', unsafe_allow_html=True)
     
     # Filter data
     filtered_df = df[
@@ -425,7 +425,7 @@ def show_demographic_analysis(df, start_year, end_year, top_causes):
     ]
     
     # Gender analysis
-    st.subheader("⚥ Gender Distribution")
+    st.subheader("Gender Distribution")
     
     gender_analysis = filtered_df.groupby(['Indicator Name', 'Sex'])['Number'].sum().reset_index()
     
@@ -441,7 +441,7 @@ def show_demographic_analysis(df, start_year, end_year, top_causes):
     st.plotly_chart(fig, use_container_width=True)
     
     # Age group analysis
-    st.subheader("👶👴 Age Group Distribution")
+    st.subheader("Age Group Distribution")
     
     age_analysis = filtered_df.groupby(['Indicator Name', 'Age Category'])['Number'].sum().reset_index()
     
@@ -472,7 +472,7 @@ def show_demographic_analysis(df, start_year, end_year, top_causes):
     st.plotly_chart(fig, use_container_width=True)
     
     # Interactive heatmap
-    st.subheader("🔥 Interactive Demographic Heatmap")
+    st.subheader("Interactive Demographic Heatmap")
     
     # Create pivot table for heatmap
     heatmap_data = filtered_df.groupby(['Age Category', 'Indicator Name'])['Death Rate'].mean().reset_index()
@@ -493,7 +493,7 @@ def show_demographic_analysis(df, start_year, end_year, top_causes):
     st.plotly_chart(fig, use_container_width=True)
     
     # Summary statistics table
-    st.subheader("📊 Summary Statistics")
+    st.subheader("Summary Statistics")
     
     summary_stats = filtered_df.groupby('Indicator Name').agg({
         'Number': ['sum', 'mean', 'std'],
